@@ -19,9 +19,15 @@ function closeModal() {
 
 document.querySelectorAll(".btn-card").forEach(btn => {
   btn.addEventListener("click", () => {
-    const videoId = btn.getAttribute("data-video");
+    const videoId = btn.dataset.video;
     const videoElement = document.getElementById(videoId);
     const source = videoElement?.querySelector("source")?.src;
+
+    const thumb = videoElement?.previousElementSibling;
+    if (thumb && thumb.classList.contains("card-thumb")) {
+      thumb.classList.add("hidden");
+    }
+
     if (source) openOverlay(source);
   });
 });
@@ -33,5 +39,7 @@ overlay.addEventListener("click", (e) => {
 });
 
 window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && overlay.getAttribute("aria-hidden") === "false") closeModal();
+  if (e.key === "Escape" && overlay.getAttribute("aria-hidden") === "false") {
+    closeModal();
+  }
 });
